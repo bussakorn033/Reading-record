@@ -1,0 +1,146 @@
+@import "./_variables.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@100;200;300;400;500;600;700&display=swap");
+@font-face {
+  font-family: "IBM Plex Sans Thai Looped", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  src: local("Kanit"),
+    url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300&display=swap") format("ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans Thai Looped", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  src: local("Kanit"),
+    url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400&display=swap") format("ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans Thai Looped", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  src: local("Kanit"),
+    url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@700&display=swap") format("ttf");
+  font-display: swap;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  @include primary-font;
+  --header: 80px;
+
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+p,
+span {
+  margin: 0;
+}
+
+label {
+  font-size: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col-wrap {
+  display: flex;
+  flex-direction: column;
+  flex-flow: wrap;
+}
+
+.flex-row-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+.py-1 {
+  padding: 1rem 0;
+}
+.px-1 {
+  padding: 0 1rem;
+}
+.pl-1 {
+  padding-left: 1rem;
+}
+.pr-1 {
+  padding-right: 1rem;
+}
+.pt-1 {
+  padding-top: 1rem;
+}
+.pb-1 {
+  padding-bottom: 1rem;
+}
+
+.m-1 {
+  margin: 1rem;
+}
+.my-1 {
+  margin: 1rem 0;
+}
+.mx-1 {
+  margin: 0 1rem;
+}
+.ml-1 {
+  margin-left: 1rem;
+}
+.mr-1 {
+  margin-right: 1rem;
+}
+.mt-1 {
+  margin-top: 1rem;
+}
+.mb-1 {
+  margin-bottom: 1rem;
+}

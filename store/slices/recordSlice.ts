@@ -36,6 +36,15 @@ export const recordSlice = createSlice({
             state.recordList[index] = updateDataRecord
         },
 
+        deleteRecordItem: (
+            state: Draft<any>,
+            params: Draft<any>
+        ) => {
+            const { payload } = params
+            const { index } = payload
+            state.recordList.splice(index, 1)
+        },
+
 
 
     },
@@ -43,6 +52,6 @@ export const recordSlice = createSlice({
 
 export const getRecordState = (state: { record: RecordState }) => state.record;
 
-export const { setRecordList, updateRecordList } = recordSlice.actions;
+export const { setRecordList, updateRecordList, deleteRecordItem } = recordSlice.actions;
 
 export default recordSlice.reducer;

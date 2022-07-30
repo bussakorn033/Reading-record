@@ -1,0 +1,33 @@
+/* color */
+$bg: #f0f8ff;
+$black: #000000;
+$white: #ffffff;
+$primary: #2d9bef;
+$primaryFilter: brightness(0) saturate(100%) invert(49%) sepia(25%) saturate(1363%) hue-rotate(164deg) brightness(105%)
+    contrast(98%);
+
+$gray: #a0a0a0;
+$error: #ff0500;
+
+$disable: #cbcbcb;
+
+$shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+$radius: 5px;
+
+$primaryFont: "IBM Plex Sans Thai Looped", sans-serif;
+@mixin primary-font {
+    font-family: $primaryFont !important;
+    font-feature-settings: "kern" off, "liga" off !important;
+}
+
+@mixin btn {
+    padding: 0.5rem 0.5rem;
+    border-radius: $radius;
+    width: 100%;
+    box-shadow: $shadow;
+    cursor: pointer;
+    :disabled {
+        cursor: default;
+    }
+}
