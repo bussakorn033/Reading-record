@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from '../store/store';
 import { deleteRecordItem, getRecordState, ReadingRecordState, setRecordList, setRecordSelect, updateRecordList } from '../store/slices/recordSlice'
 import ModalEdit from '../components/modalEdit'
 import FormRecord from '../components/formRecord'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFaceDizzy } from '@fortawesome/free-solid-svg-icons'
 
 
 const Home: NextPage = () => {
@@ -77,7 +79,6 @@ const Home: NextPage = () => {
           image: image,
         }
       }));
-      // dispatch(setRecordSelect({ recordItem: {}, recordIndex: 0 }));
       setIsOpenModalEdit(false)
 
     } else {
@@ -136,48 +137,58 @@ const Home: NextPage = () => {
                 <th>Read time (Hrs)</th>
                 <th>Setting</th>
               </tr>
-              {
-                recordList.length > 0 && recordList.map((item: any, index: number) => {
-                  const no = index + 1
-                  return (
-                    <div key={`recordList-${index}`}>
-                      <tr className={sy['trDetail']}>
-                        <td>{no}.</td>
-                        <td>
-                          <div>
-                            <Image
-                              loader={() => item.image}
-                              src={item.image}
-                              alt={`book-${item.bookTitle}`}
-                              width={150}
-                              height={150}
-                            />
-                          </div>
-                        </td>
-                        <td>{item.bookTitle}</td>
-                        <td>{item.date}</td>
-                        <td>{item.readTime}</td>
-                        <td>
-                          <div>
-                            <button
-                              onClick={() => handleOpenModalEdit(item, index)}
-                              className={sy['btn-edit']}
-                            >
-                              Edit
-                            </button>
-                            <div className={'mb-1'} />
-                            <button
-                              onClick={() => handleDeleteRecord(index)}
-                              className={sy['btn-delete']}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </div>
-                  )
-                })
+              {recordList.length > 0 ?
+                <>
+
+                  {
+                    recordList.map((item: any, index: number) => {
+                      const no = index + 1
+                      return (
+                        <div key={`recordList-${index}`}>
+                          <tr className={sy['trDetail']}>
+                            <td>{no}.</td>
+                            <td>
+                              <div>
+                                <Image
+                                  loader={() => item.image}
+                                  src={item.image}
+                                  alt={`book-${item.bookTitle}`}
+                                  width={150}
+                                  height={150}
+                                />
+                              </div>
+                            </td>
+                            <td>{item.bookTitle}</td>
+                            <td>{item.date}</td>
+                            <td>{item.readTime}</td>
+                            <td>
+                              <div>
+                                <button
+                                  onClick={() => handleOpenModalEdit(item, index)}
+                                  className={sy['btn-edit']}
+                                >
+                                  Edit
+                                </button>
+                                <div className={'mb-1'} />
+                                <button
+                                  onClick={() => handleDeleteRecord(index)}
+                                  className={sy['btn-delete']}
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        </div>
+                      )
+                    })
+                  }
+                </>
+                :
+                <div className={sy['container-not-reading-record']}>
+                  <FontAwesomeIcon icon={faFaceDizzy} />
+                  <h1>Not found reading record </h1>
+                </div>
               }
             </table>
 
@@ -192,6 +203,8 @@ const Home: NextPage = () => {
         handlePreviewImage={(e: any) => handlePreviewImage(e)}
         isSelectUploadImage={isSelectUploadImage}
         previewImage={previewImage}
+        setPreviewImage={(e: any) => setPreviewImage(e)}
+        recordItemSelect={recordItemSelect}
       />
     </div>
   )

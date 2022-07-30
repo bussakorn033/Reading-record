@@ -23,6 +23,9 @@
 
             .side-reading-record {
                 width: 30vw;
+                @media (max-width: 767px) {
+                    width: 25vw;
+                }
             }
 
             .content-record {
@@ -30,14 +33,32 @@
                 width: 70vw;
                 height: calc(100vh - var(--header) - 1rem);
                 overflow: scroll;
-                // padding-bottom: 1rem;
                 position: relative;
+
+                @media (max-width: 767px) {
+                    width: 75vw;
+                }
 
                 table {
                     width: 100%;
+                    height: calc(100vh - var(--header) - 1rem);
                     background-color: $white;
                     border-radius: $radius;
                     position: relative;
+
+                    .container-not-reading-record {
+                        height: calc(100vh - (var(--header) * 2) - 2rem);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        svg {
+                            margin-bottom: 1rem;
+                            width: 150px;
+                            height: 150px;
+                            color: $primary;
+                        }
+                    }
 
                     tr:not(.trDetail) {
                         z-index: 100;
@@ -57,6 +78,7 @@
                         th {
                             display: flex;
                             flex-direction: column;
+                            justify-content: center;
                             flex: 1;
                             padding: 0.5rem;
                             background-color: $primary;
@@ -84,6 +106,8 @@
                             img {
                                 width: 100%;
                                 height: 100%;
+                                min-width: 25px;
+                                min-height: 25px;
                                 object-fit: cover;
                             }
                         }
@@ -154,39 +178,43 @@
             }
         }
 
-        input[type="radio"]:after {
-            cursor: pointer;
-            width: 10px;
-            height: 10px;
-            border-radius: 9999px;
-            top: -2px;
-            left: -1px;
-            position: relative;
-            background-color: $disable;
-            content: "";
-            display: inline-block;
-            visibility: visible;
-            border: 3px solid $white;
-            outline: 2px solid $disable;
-        }
+        // input[type="radio"] {
+        //     border-radius: 9999px;
+        // }
 
-        input[type="radio"]:checked:after {
-            width: 10px;
-            height: 10px;
-            border-radius: 9999px;
-            top: -2px;
-            left: -1px;
-            position: relative;
-            background-color: $primary;
-            content: "";
-            display: inline-block;
-            visibility: visible;
-            border: 3px solid $white;
-            outline: 2px solid $primary;
-        }
-        input[type="radio"]:first-child {
-            padding-right: 0.5rem;
-        }
+        // input[type="radio"]:after {
+        //     cursor: pointer;
+        //     width: 10px;
+        //     height: 10px;
+        //     border-radius: 9999px;
+        //     top: -2px;
+        //     left: -1px;
+        //     position: relative;
+        //     background-color: $disable;
+        //     content: "";
+        //     display: inline-block;
+        //     visibility: visible;
+        //     border: 3px solid $white;
+        //     outline: 2px solid $disable;
+        // }
+
+        // input[type="radio"]:checked:after {
+        //     width: 10px;
+        //     height: 10px;
+        //     border-radius: 9999px;
+        //     top: -2px;
+        //     left: -1px;
+        //     position: relative;
+        //     background-color: $primary;
+        //     content: "";
+        //     display: inline-block;
+        //     visibility: visible;
+        //     border: 3px solid $white;
+        //     outline: 2px solid $primary;
+        // }
+        // input[type="radio"]:first-child {
+        //     padding-right: 0.5rem;
+        // }
         input[type="radio"] ~ label {
             padding-left: 0.5rem;
         }

@@ -31,6 +31,8 @@ body {
   padding: 0;
   margin: 0;
   @include primary-font;
+  color: $black;
+
   --header: 80px;
 
   /* IE and Edge */
@@ -52,8 +54,11 @@ h5,
 h6,
 label,
 p,
-span {
+span,
+th,
+td {
   margin: 0;
+  color: $black;
 }
 
 label {

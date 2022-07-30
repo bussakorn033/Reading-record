@@ -29,17 +29,24 @@ const FormRecord = (props: Props) => {
 
     useEffect(() => {
         handleReset()
-    }, [])
-    useEffect(() => {
         if (id === 'Modal') {
-            setImageUpload(previewImage)
+            setImageUpload('')
+            setPreviewImage('')
+        }
+    }, [])
+
+    useEffect(() => {
+        setImageUpload(previewImage)
+        setPreviewImage(previewImage)
+        if (id === 'Modal') {
+            setImageUpload('')
         }
     }, [previewImage])
 
 
     const handleReset = () => {
         setImageUpload('')
-        setPreviewImage
+        setPreviewImage('')
     }
 
 
@@ -54,7 +61,10 @@ const FormRecord = (props: Props) => {
                         date: { value: string };
                         readTime: { value: number };
                         typeImage: { value: string };
-                        image: { value: any };
+                        image: {
+                            files: any,
+                            value: any
+                        };
                     };
                     const bookTitle: string = target.bookTitle.value; // typechecks!
                     const date: string = target.date.value; // typechecks!

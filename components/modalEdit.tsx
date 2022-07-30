@@ -1,9 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import { getRecordState } from '../store/slices/recordSlice'
-import { useDispatch, useSelector } from '../store/store'
+import React from 'react'
 import sy from '../styles/modalEdit.module.scss'
 import FormRecord from './formRecord'
 
@@ -16,6 +14,7 @@ type Props = {
     isSelectUploadImage: boolean,
     previewImage: string,
     setPreviewImage: any,
+    recordItemSelect?: any,
 }
 
 const ModalEdit = (props: Props) => {
@@ -28,6 +27,7 @@ const ModalEdit = (props: Props) => {
         isSelectUploadImage,
         previewImage,
         setPreviewImage,
+        recordItemSelect
     } = props
 
     if (!isOpenModal) {
@@ -35,12 +35,8 @@ const ModalEdit = (props: Props) => {
     } else {
     }
 
+    const imageUpload = recordItemSelect.image || ''
 
-    const dispatch = useDispatch();
-    const {
-        recordItemSelect,
-        recordIndexSelect,
-    } = useSelector(getRecordState);
 
 
     return (
@@ -80,9 +76,9 @@ const ModalEdit = (props: Props) => {
                             </label>
                             <div>
                                 <Image
-                                    loader={() => recordItemSelect?.image}
-                                    src={recordItemSelect?.image}
-                                    alt={`book-${recordItemSelect?.bookTitle}`}
+                                    loader={() => imageUpload}
+                                    src={imageUpload}
+                                    alt={`book-${imageUpload}`}
                                     width={150}
                                     height={150}
                                 />
