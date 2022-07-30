@@ -85,19 +85,6 @@ const Home: NextPage = () => {
     }
   }
 
-  // const handleEditRecord = (item: ReadingRecordState, index: number) => {
-  //   /* TODO Update record redux */
-  //   // const updateDataRecord = {
-
-  //   // }
-
-  //   // dispatch(updateRecordList({
-  //   //   index: index,
-  //   //   updateDataRecord: item,
-  //   // }
-  //   // ));
-  // }
-
   const handleOpenModalEdit = (item: ReadingRecordState, index: number) => {
     /* TODO Open modal edit */
     dispatch(setRecordSelect({ recordItem: item, recordIndex: index }));
@@ -132,6 +119,7 @@ const Home: NextPage = () => {
               handlePreviewImage={(e: any) => handlePreviewImage(e)}
               isSelectUploadImage={isSelectUploadImage}
               previewImage={previewImage}
+              setPreviewImage={(e: any) => setPreviewImage(e)}
             />
 
 

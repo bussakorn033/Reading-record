@@ -1,9 +1,6 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { getRecordState, ReadingRecordState } from '../store/slices/recordSlice'
-import { useDispatch, useSelector } from '../store/store'
+import { ReadingRecordState } from '../store/slices/recordSlice'
 import sy from '../styles/record.module.scss'
 
 type Props = {
@@ -13,6 +10,7 @@ type Props = {
     handlePreviewImage: any;
     isSelectUploadImage: boolean;
     previewImage: string;
+    setPreviewImage: any;
 }
 
 const FormRecord = (props: Props) => {
@@ -24,20 +22,25 @@ const FormRecord = (props: Props) => {
         handlePreviewImage,
         isSelectUploadImage,
         previewImage,
+        setPreviewImage
     } = props
 
     const [imageUpload, setImageUpload] = useState('')
 
     useEffect(() => {
-        setImageUpload(previewImage)
+        handleReset()
+    }, [])
+    useEffect(() => {
+        if (id === 'Modal') {
+            setImageUpload(previewImage)
+        }
     }, [previewImage])
 
-    const dispatch = useDispatch();
-    const {
-        recordList,
-        recordItemSelect,
-        recordIndexSelect,
-    } = useSelector(getRecordState);
+
+    const handleReset = () => {
+        setImageUpload('')
+        setPreviewImage
+    }
 
 
     return (
@@ -76,8 +79,6 @@ const FormRecord = (props: Props) => {
                     }
                     setImageUpload(image)
                     handleSubmitForm(payload)
-                    // return document.getElementById(id)?.onreset();
-
                 }}
             >
                 <div>
@@ -191,6 +192,7 @@ const FormRecord = (props: Props) => {
 
                 <div>
                     <input className={sy['btn-submit']} type="submit" value="Submit" />
+                    <input className={sy['btn-reset']} type="reset" value="Reset" onClick={() => handleReset()} />
                 </div>
 
             </form>

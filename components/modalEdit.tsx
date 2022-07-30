@@ -15,6 +15,7 @@ type Props = {
     handlePreviewImage: any,
     isSelectUploadImage: boolean,
     previewImage: string,
+    setPreviewImage: any,
 }
 
 const ModalEdit = (props: Props) => {
@@ -26,6 +27,7 @@ const ModalEdit = (props: Props) => {
         handlePreviewImage,
         isSelectUploadImage,
         previewImage,
+        setPreviewImage,
     } = props
 
     if (!isOpenModal) {
@@ -96,6 +98,7 @@ const ModalEdit = (props: Props) => {
                             handlePreviewImage={handlePreviewImage}
                             isSelectUploadImage={isSelectUploadImage}
                             previewImage={previewImage}
+                            setPreviewImage={setPreviewImage}
                         />
                     </div>
                 </div>

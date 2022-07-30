@@ -28,9 +28,9 @@
             .content-record {
                 padding-left: 1rem;
                 width: 70vw;
-                height: calc(100vh - var(--header));
+                height: calc(100vh - var(--header) - 1rem);
                 overflow: scroll;
-                padding-bottom: 1rem;
+                // padding-bottom: 1rem;
                 position: relative;
 
                 table {
@@ -67,6 +67,12 @@
                         th:last-child {
                             border-radius: 0 5px 0 0;
                         }
+                        td:nth-child(6),
+                        td:nth-child(5),
+                        td:nth-child(4),
+                        td:nth-child(1) {
+                            text-align: center;
+                        }
 
                         td {
                             display: flex;
@@ -93,6 +99,13 @@
     background-color: $white;
     border: 2px solid $primary;
     color: $primary;
+    margin-bottom: 1rem;
+}
+.btn-reset {
+    @include btn;
+    background-color: $white;
+    border: 2px solid $error;
+    color: $error;
     margin-bottom: 1rem;
 }
 .btn-delete {
@@ -129,6 +142,7 @@
         input[type="text"],
         input[type="date"],
         input[type="number"] {
+            background-color: $white;
             padding: 0.5rem 1rem;
             margin-bottom: 1rem;
             border-radius: $radius;
