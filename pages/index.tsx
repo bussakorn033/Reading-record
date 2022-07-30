@@ -1,22 +1,19 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
 import styles from '../styles/Home.module.css'
 
-import React from 'react'
+import React, { useState } from 'react'
 
-interface payloadProps {
-  bookTitle: string,
-  date: string,
-  readTime: number,
-  image?: any,
-}
+
+import { useDispatch, useSelector } from '../store/store';
+import { getRecordState, ReadingRecordState, setRecordList } from '../store/slices/recordSlice'
 
 
 const Home: NextPage = () => {
 
-  // const formRef = useRef()
+  const dispatch = useDispatch();
+  const { recordList } = useSelector(getRecordState);
 
   const [isSelectUploadImage, setIsSelectUploadImage] = useState(true)
   const [previewImage, setPreviewImage] = useState('')
@@ -43,19 +40,19 @@ const Home: NextPage = () => {
     bookTitle,
     date,
     readTime,
-  }: payloadProps) => {
+  }: ReadingRecordState) => {
 
-    const payload: payloadProps = {
+    const payload: ReadingRecordState = {
       bookTitle: bookTitle,
       date: date,
       readTime: readTime,
       image: previewImage,
     }
-    console.log('====================================');
-    console.log('payload', payload)
-    console.log('====================================');
+    /* TODO Submit redux */
+    dispatch(setRecordList(payload));
   }
 
+  console.log('recordList', recordList)
   return (
     <div className={styles.container}>
       <Head>
@@ -80,7 +77,7 @@ const Home: NextPage = () => {
           const date: string = target.date.value; // typechecks!
           const readTime: number = Number(target.readTime.value); // typechecks!
 
-          const payload: payloadProps = {
+          const payload: ReadingRecordState = {
             bookTitle: bookTitle,
             date: date,
             readTime: readTime,
@@ -169,7 +166,10 @@ const Home: NextPage = () => {
               </>
             )
           }
-          {previewImage &&
+          {(
+            previewImage.includes('http') ||
+            previewImage.includes('https')
+          ) &&
             (
               <>
                 <div>
