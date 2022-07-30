@@ -20,88 +20,13 @@
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
+
             .side-reading-record {
                 width: 30vw;
-                form {
-                    height: 100%;
-                    padding: 0 1rem 1rem 0;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-
-                    input[type="text"],
-                    input[type="date"],
-                    input[type="number"] {
-                        padding: 0.5rem 1rem;
-                        margin-bottom: 1rem;
-                        border-radius: $radius;
-                        border: 1.5px solid rgba($color: $primary, $alpha: 0.5);
-                        box-shadow: $shadow;
-
-                        &:focus-visible {
-                            outline: none;
-                        }
-                    }
-
-                    input[type="radio"]:after {
-                        cursor: pointer;
-                        width: 10px;
-                        height: 10px;
-                        border-radius: 9999px;
-                        top: -2px;
-                        left: -1px;
-                        position: relative;
-                        background-color: $disable;
-                        content: "";
-                        display: inline-block;
-                        visibility: visible;
-                        border: 3px solid $white;
-                        outline: 2px solid $disable;
-                    }
-
-                    input[type="radio"]:checked:after {
-                        width: 10px;
-                        height: 10px;
-                        border-radius: 9999px;
-                        top: -2px;
-                        left: -1px;
-                        position: relative;
-                        background-color: $primary;
-                        content: "";
-                        display: inline-block;
-                        visibility: visible;
-                        border: 3px solid $white;
-                        outline: 2px solid $primary;
-                    }
-                    input[type="radio"]:first-child {
-                        padding-right: 0.5rem;
-                    }
-                    input[type="radio"] ~ label {
-                        padding-left: 0.5rem;
-                    }
-                    input[type="file" i] {
-                        display: flex;
-                        flex-direction: column;
-                        margin-bottom: 1rem;
-                    }
-                    input[type="file" i]::-webkit-file-upload-button {
-                        @include btn;
-                        width: fit-content;
-                        background-color: $primary;
-                        border: none;
-                        box-shadow: $shadow;
-                        color: $white;
-                        font-weight: 700;
-                    }
-
-                    img {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                    }
-                }
             }
+
             .content-record {
+                padding-left: 1rem;
                 width: 70vw;
                 height: calc(100vh - var(--header));
                 overflow: scroll;
@@ -115,7 +40,7 @@
                     position: relative;
 
                     tr:not(.trDetail) {
-                        z-index: 99;
+                        z-index: 100;
                         position: sticky;
                         top: 0;
                         left: 0;
@@ -168,6 +93,7 @@
     background-color: $white;
     border: 2px solid $primary;
     color: $primary;
+    margin-bottom: 1rem;
 }
 .btn-delete {
     @include btn;
@@ -181,3 +107,93 @@
     border: none;
     color: $white;
 }
+
+/* form recode */
+.container-form-record {
+    height: 90%;
+    @media (max-width: 767px) {
+        height: 100%;
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+        height: 90%;
+    }
+    form {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"] {
+            padding: 0.5rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: $radius;
+            border: 1.5px solid rgba($color: $primary, $alpha: 0.5);
+            box-shadow: $shadow;
+
+            &:focus-visible {
+                outline: none;
+            }
+        }
+
+        input[type="radio"]:after {
+            cursor: pointer;
+            width: 10px;
+            height: 10px;
+            border-radius: 9999px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            background-color: $disable;
+            content: "";
+            display: inline-block;
+            visibility: visible;
+            border: 3px solid $white;
+            outline: 2px solid $disable;
+        }
+
+        input[type="radio"]:checked:after {
+            width: 10px;
+            height: 10px;
+            border-radius: 9999px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            background-color: $primary;
+            content: "";
+            display: inline-block;
+            visibility: visible;
+            border: 3px solid $white;
+            outline: 2px solid $primary;
+        }
+        input[type="radio"]:first-child {
+            padding-right: 0.5rem;
+        }
+        input[type="radio"] ~ label {
+            padding-left: 0.5rem;
+        }
+        input[type="file" i] {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+        input[type="file" i]::-webkit-file-upload-button {
+            @include btn;
+            width: fit-content;
+            background-color: $primary;
+            border: none;
+            box-shadow: $shadow;
+            color: $white;
+            font-weight: 700;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+/* form recode */

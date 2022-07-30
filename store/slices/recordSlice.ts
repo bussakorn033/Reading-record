@@ -5,26 +5,48 @@ export interface ReadingRecordState {
     date?: string;
     readTime?: number;
     image?: string;
+    id?: string;
 }
 
 export interface RecordState {
     recordList?: any;
+    recordItemSelect?: ReadingRecordState;
+    recordIndexSelect?: number;
 }
 
 const initialState: RecordState = {
     recordList: [],
+    recordItemSelect: {},
+    recordIndexSelect: 0,
 } as const;
 
 export const recordSlice = createSlice({
-    name: 'user',
+    name: 'record',
     initialState,
     reducers: {
+
+        setRecordField: (
+            state: Draft<any>,
+            params: Draft<any>) => {
+            const { payload } = params
+            const { key, value } = payload
+            state[key] = value
+        },
 
         setRecordList: (
             state: Draft<any>,
             params: Draft<any>) => {
             const { payload } = params
             state.recordList.push(payload)
+        },
+
+        setRecordSelect: (
+            state: Draft<any>,
+            params: Draft<any>) => {
+            const { payload } = params
+            const { recordItem, recordIndex } = payload
+            state.recordItemSelect = recordItem
+            state.recordIndexSelect = recordIndex
         },
 
         updateRecordList: (
@@ -52,6 +74,6 @@ export const recordSlice = createSlice({
 
 export const getRecordState = (state: { record: RecordState }) => state.record;
 
-export const { setRecordList, updateRecordList, deleteRecordItem } = recordSlice.actions;
+export const { setRecordField, setRecordSelect, setRecordList, updateRecordList, deleteRecordItem } = recordSlice.actions;
 
 export default recordSlice.reducer;

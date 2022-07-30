@@ -7,20 +7,26 @@ import React, { useEffect, useState } from 'react'
 
 
 import { useDispatch, useSelector } from '../store/store';
-import { deleteRecordItem, getRecordState, ReadingRecordState, setRecordList, updateRecordList } from '../store/slices/recordSlice'
+import { deleteRecordItem, getRecordState, ReadingRecordState, setRecordList, setRecordSelect, updateRecordList } from '../store/slices/recordSlice'
+import ModalEdit from '../components/modalEdit'
+import FormRecord from '../components/formRecord'
 
 
 const Home: NextPage = () => {
   const [isSSR, setIsSSR] = useState<boolean>(true);
-  // const isSSR = typeof window === "undefined"
 
 
 
   const dispatch = useDispatch();
-  const { recordList } = useSelector(getRecordState);
+  const {
+    recordList,
+    recordItemSelect,
+    recordIndexSelect,
+  } = useSelector(getRecordState);
 
   const [isSelectUploadImage, setIsSelectUploadImage] = useState(true)
   const [previewImage, setPreviewImage] = useState('')
+  const [isOpenModalEdit, setIsOpenModalEdit] = useState(false)
 
   useEffect(() => {
     setIsSSR(false);
@@ -50,6 +56,7 @@ const Home: NextPage = () => {
     bookTitle,
     date,
     readTime,
+    id,
   }: ReadingRecordState) => {
 
     const payload: ReadingRecordState = {
@@ -59,29 +66,41 @@ const Home: NextPage = () => {
       image: previewImage,
     }
     /* TODO Submit redux */
-    dispatch(setRecordList(payload));
+    if (id === 'Modal') {
+      setIsOpenModalEdit(false)
+      dispatch(setRecordSelect({ recordItem: {}, recordIndex: 0 }));
+      dispatch(updateRecordList({ index: recordIndexSelect, updateDataRecord: recordItemSelect }));
+
+    } else {
+      dispatch(setRecordList(payload));
+    }
   }
 
-  const handleEditRecord = (index: number) => {
-    /* TODO Update record redux */
-    const updateDataRecord = {
+  // const handleEditRecord = (item: ReadingRecordState, index: number) => {
+  //   /* TODO Update record redux */
+  //   // const updateDataRecord = {
 
-    }
+  //   // }
 
-    dispatch(updateRecordList({
-      index,
-      updateDataRecord,
-    }
-    ));
+  //   // dispatch(updateRecordList({
+  //   //   index: index,
+  //   //   updateDataRecord: item,
+  //   // }
+  //   // ));
+  // }
+
+  const handleOpenModalEdit = (item: ReadingRecordState, index: number) => {
+    /* TODO Open modal edit */
+    dispatch(setRecordSelect({ recordItem: item, recordIndex: index }));
+    setIsOpenModalEdit(true)
   }
 
   const handleDeleteRecord = (index: number) => {
     /* TODO Delete record redux */
-    dispatch(deleteRecordItem(index));
+    dispatch(deleteRecordItem({ index: index }));
 
   }
 
-  console.log('recordList', recordList)
   return (
     <div className={sy['container']}>
       <Head>
@@ -97,141 +116,15 @@ const Home: NextPage = () => {
 
         <div className={sy['container-body']}>
           <div className={sy['side-reading-record']}>
+            <FormRecord
+              id={'Create'}
+              handleSubmitForm={(e: any) => handleSubmitForm(e)}
+              handleTypeImage={(e: any) => handleTypeImage(e)}
+              handlePreviewImage={(e: any) => handlePreviewImage(e)}
+              isSelectUploadImage={isSelectUploadImage}
+              previewImage={previewImage}
+            />
 
-            <form
-              onSubmit={(e: React.SyntheticEvent) => {
-                e.preventDefault();
-                const target = e.target as typeof e.target & {
-                  bookTitle: { value: string };
-                  date: { value: string };
-                  readTime: { value: number };
-                  // typeImage: { value: string };
-                  // image: { value: any };
-                };
-                const bookTitle: string = target.bookTitle.value; // typechecks!
-                const date: string = target.date.value; // typechecks!
-                const readTime: number = Number(target.readTime.value); // typechecks!
-
-                const payload: ReadingRecordState = {
-                  bookTitle: bookTitle,
-                  date: date,
-                  readTime: readTime,
-                }
-                handleSubmitForm(payload)
-
-              }}
-            >
-              <div>
-                <div className={'flex-col'}>
-                  <label>
-                    Title of book
-                  </label>
-                  <input
-                    type="text"
-                    name="bookTitle"
-                    placeholder='Title of book'
-                  />
-                </div>
-
-                <div className={'flex-col'}>
-                  <label>
-                    Date
-                  </label>
-                  <input
-                    type="date"
-                    name="date"
-                    placeholder='Date'
-                  />
-                </div>
-
-                <div className={'flex-col'}>
-                  <label>
-                    Read time (Hrs)
-                  </label>
-                  <input
-                    type="number"
-                    step="0.5"
-                    pattern="[0-9\/]"
-                    name="readTime"
-                    placeholder='Read time'
-                  />
-                </div>
-
-                <div className={'mb-1 flex-col'}>
-                  <div >
-                    <input
-                      onChange={(e) => handleTypeImage(e)}
-                      checked={isSelectUploadImage}
-                      name="typeImage" value="uploadImage" id="uploadImage" type="radio" /><label>Upload image</label>
-                  </div>
-                  <div>
-                    <input
-                      onChange={(e) => handleTypeImage(e)}
-                      name="typeImage" value="linkImage" id="linkImage" type="radio" /><label>Link image</label>
-                  </div>
-                </div>
-
-                <div className=''>
-                  {isSelectUploadImage ?
-                    (
-                      <>
-                        <div className={'flex-col'}>
-                          <label>
-                            Upload image
-                          </label>
-                          <input
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            name="image"
-                            placeholder='Upload image'
-                            onChange={(e) => handlePreviewImage(e)}
-                          />
-                        </div>
-                      </>
-                    )
-                    :
-                    (
-                      <>
-                        <div className={'flex-col'}>
-                          <label>
-                            Link image
-                          </label>
-                          <input
-                            type="text"
-                            name="image"
-                            placeholder='Link image'
-                            onChange={(e) => handlePreviewImage(e)}
-                          />
-                        </div>
-                      </>
-                    )
-                  }
-                  {(
-                    previewImage.includes('http') ||
-                    previewImage.includes('https')
-                  ) &&
-                    (
-                      <>
-                        <div>
-                          <Image
-                            loader={() => previewImage}
-                            src={previewImage}
-                            alt='previewImage'
-                            width={150}
-                            height={150}
-                          />
-                        </div>
-                      </>
-                    )
-                  }
-                </div>
-              </div>
-
-              <div>
-                <input className={sy['btn-submit']} type="submit" value="Submit" />
-              </div>
-
-            </form>
 
           </div>
 
@@ -251,21 +144,9 @@ const Home: NextPage = () => {
                   const no = index + 1
                   return (
                     <div key={`recordList-${index}`}>
-                      {/* <table >
-                      {index <= 0 && (
-                        <tr>
-                          <th>No</th>
-                          <th>Image</th>
-                          <th>Book title</th>
-                          <th>Date</th>
-                          <th>Read time (Hrs)</th>
-                          <th>Setting</th>
-                        </tr>
-                      )} */}
                       <tr className={sy['trDetail']}>
                         <td>{no}.</td>
                         <td>
-                          {/* {item.image} */}
                           <div>
                             <Image
                               loader={() => item.image}
@@ -280,10 +161,9 @@ const Home: NextPage = () => {
                         <td>{item.date}</td>
                         <td>{item.readTime}</td>
                         <td>
-                          {/* setting */}
                           <div>
                             <button
-                              onClick={() => handleEditRecord(index)}
+                              onClick={() => handleOpenModalEdit(item, index)}
                               className={sy['btn-edit']}
                             >
                               Edit
@@ -298,16 +178,25 @@ const Home: NextPage = () => {
                           </div>
                         </td>
                       </tr>
-                      {/* </table> */}
                     </div>
                   )
                 })
               }
             </table>
+
           </div>
         </div>
-      </div >
-    </div >
+      </div>
+      <ModalEdit
+        isOpenModal={isOpenModalEdit}
+        setIsOpenModal={() => setIsOpenModalEdit(false)}
+        handleSubmitForm={(e: any) => handleSubmitForm(e)}
+        handleTypeImage={(e: any) => handleTypeImage(e)}
+        handlePreviewImage={(e: any) => handlePreviewImage(e)}
+        isSelectUploadImage={isSelectUploadImage}
+        previewImage={previewImage}
+      />
+    </div>
   )
 }
 
