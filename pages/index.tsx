@@ -57,19 +57,28 @@ const Home: NextPage = () => {
     date,
     readTime,
     id,
+    image,
   }: ReadingRecordState) => {
 
     const payload: ReadingRecordState = {
       bookTitle: bookTitle,
       date: date,
       readTime: readTime,
-      image: previewImage,
+      image: image,
     }
     /* TODO Submit redux */
     if (id === 'Modal') {
+      dispatch(updateRecordList({
+        index: recordIndexSelect,
+        updateDataRecord: {
+          bookTitle: bookTitle,
+          date: date,
+          readTime: readTime,
+          image: image,
+        }
+      }));
+      // dispatch(setRecordSelect({ recordItem: {}, recordIndex: 0 }));
       setIsOpenModalEdit(false)
-      dispatch(setRecordSelect({ recordItem: {}, recordIndex: 0 }));
-      dispatch(updateRecordList({ index: recordIndexSelect, updateDataRecord: recordItemSelect }));
 
     } else {
       dispatch(setRecordList(payload));
@@ -151,7 +160,7 @@ const Home: NextPage = () => {
                             <Image
                               loader={() => item.image}
                               src={item.image}
-                              alt={`book-${no}`}
+                              alt={`book-${item.bookTitle}`}
                               width={150}
                               height={150}
                             />

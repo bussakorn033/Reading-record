@@ -1,7 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { getRecordState, ReadingRecordState } from '../store/slices/recordSlice'
 import { useDispatch, useSelector } from '../store/store'
 import sy from '../styles/record.module.scss'
@@ -26,16 +26,18 @@ const FormRecord = (props: Props) => {
         previewImage,
     } = props
 
+    const [imageUpload, setImageUpload] = useState('')
+
+    useEffect(() => {
+        setImageUpload(previewImage)
+    }, [previewImage])
+
     const dispatch = useDispatch();
     const {
         recordList,
         recordItemSelect,
         recordIndexSelect,
     } = useSelector(getRecordState);
-
-    console.log('recordList--', recordList)
-    console.log('recordItemSelect--', recordItemSelect)
-    console.log('recordIndexSelect--', recordIndexSelect)
 
 
     return (
@@ -48,20 +50,33 @@ const FormRecord = (props: Props) => {
                         bookTitle: { value: string };
                         date: { value: string };
                         readTime: { value: number };
-                        // typeImage: { value: string };
-                        // image: { value: any };
+                        typeImage: { value: string };
+                        image: { value: any };
                     };
                     const bookTitle: string = target.bookTitle.value; // typechecks!
                     const date: string = target.date.value; // typechecks!
                     const readTime: number = Number(target.readTime.value); // typechecks!
+                    const typeImage: string = target.typeImage.value; // typechecks!
+                    let image: string = '' // typechecks!
+
+                    if (typeImage === 'uploadImage') {
+                        if (!target.image.files || target.image.files.length === 0) {
+                            return
+                        }
+                        const imageURL = URL.createObjectURL(target.image.files[0])
+                        image = imageURL
+                    }
 
                     const payload: ReadingRecordState = {
                         bookTitle: bookTitle,
                         date: date,
                         readTime: readTime,
-                        id: id
+                        id: id,
+                        image: image
                     }
+                    setImageUpload(image)
                     handleSubmitForm(payload)
+                    // return document.getElementById(id)?.onreset();
 
                 }}
             >
@@ -71,7 +86,6 @@ const FormRecord = (props: Props) => {
                             Title of book
                         </label>
                         <input
-                            // value={recordItemSelect?.bookTitle}
                             type="text"
                             name="bookTitle"
                             placeholder='Title of book'
@@ -83,7 +97,6 @@ const FormRecord = (props: Props) => {
                             Date
                         </label>
                         <input
-                            // value={recordItemSelect?.date}
                             type="date"
                             name="date"
                             placeholder='Date'
@@ -95,7 +108,6 @@ const FormRecord = (props: Props) => {
                             Read time (Hrs)
                         </label>
                         <input
-                            // value={recordItemSelect?.readTime}
                             type="number"
                             step="0.5"
                             min={0}
@@ -155,16 +167,18 @@ const FormRecord = (props: Props) => {
                             )
                         }
                         {(
-                            previewImage.includes('http') ||
-                            previewImage.includes('https')
+                            imageUpload.includes('http') ||
+                            imageUpload.includes('https') ||
+                            imageUpload.includes('png') ||
+                            imageUpload.includes('jpeg')
                         ) &&
                             (
                                 <>
                                     <div>
                                         <Image
-                                            loader={() => previewImage}
-                                            src={previewImage}
-                                            alt='previewImage'
+                                            loader={() => imageUpload}
+                                            src={imageUpload}
+                                            alt='imageUpload'
                                             width={150}
                                             height={150}
                                         />

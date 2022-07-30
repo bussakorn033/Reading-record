@@ -1,6 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
 import { getRecordState } from '../store/slices/recordSlice'
 import { useDispatch, useSelector } from '../store/store'
 import sy from '../styles/modalEdit.module.scss'
@@ -17,7 +18,6 @@ type Props = {
 }
 
 const ModalEdit = (props: Props) => {
-    // console.log('props', props)
     const {
         isOpenModal,
         setIsOpenModal,
@@ -30,6 +30,7 @@ const ModalEdit = (props: Props) => {
 
     if (!isOpenModal) {
         return null
+    } else {
     }
 
 
@@ -39,28 +40,65 @@ const ModalEdit = (props: Props) => {
         recordIndexSelect,
     } = useSelector(getRecordState);
 
-    // console.log('recordItemSelect', recordItemSelect)
-    // console.log('recordIndexSelect', recordIndexSelect)
 
     return (
         <div className={sy['container']}>
 
             <div className={sy['container-modal-edit']}>
                 <div className={sy['header-modal-edit']}>
-                    <label className={sy['title']}>ModalEdit</label>
+                    <label className={sy['title']}>Edit record {recordItemSelect?.bookTitle} </label>
                     <button className={sy['btn-close']} onClick={setIsOpenModal}>
                         <FontAwesomeIcon icon={faXmark} />
                     </button>
                 </div>
 
-                <FormRecord
-                    id={'Modal'}
-                    handleSubmitForm={handleSubmitForm}
-                    handleTypeImage={handleTypeImage}
-                    handlePreviewImage={handlePreviewImage}
-                    isSelectUploadImage={isSelectUploadImage}
-                    previewImage={previewImage}
-                />
+                <div className={sy['container-content']}>
+                    <div className={sy['container-content-old']}>
+                        <label>
+                            Title of book:&nbsp;
+                            <span>
+                                {recordItemSelect?.bookTitle}
+                            </span>
+                        </label>
+                        <label>
+                            Date:&nbsp;
+                            <span>
+                                {recordItemSelect?.date}
+                            </span>
+                        </label>
+                        <label>
+                            Read time:&nbsp;
+                            <span>
+                                {recordItemSelect?.readTime} hours
+                            </span>
+                        </label>
+                        <div>
+                            <label>
+                                Image<br />
+                            </label>
+                            <div>
+                                <Image
+                                    loader={() => recordItemSelect?.image}
+                                    src={recordItemSelect?.image}
+                                    alt={`book-${recordItemSelect?.bookTitle}`}
+                                    width={150}
+                                    height={150}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={sy['container-content-edit']}>
+                        <FormRecord
+                            id={'Modal'}
+                            handleSubmitForm={handleSubmitForm}
+                            handleTypeImage={handleTypeImage}
+                            handlePreviewImage={handlePreviewImage}
+                            isSelectUploadImage={isSelectUploadImage}
+                            previewImage={previewImage}
+                        />
+                    </div>
+                </div>
             </div>
 
         </div>
