@@ -179,43 +179,43 @@
             }
         }
 
-        // input[type="radio"] {
-        //     border-radius: 9999px;
-        // }
+        input[type="radio"] {
+            border-radius: 9999px;
+        }
 
-        // input[type="radio"]:after {
-        //     cursor: pointer;
-        //     width: 10px;
-        //     height: 10px;
-        //     border-radius: 9999px;
-        //     top: -2px;
-        //     left: -1px;
-        //     position: relative;
-        //     background-color: $disable;
-        //     content: "";
-        //     display: inline-block;
-        //     visibility: visible;
-        //     border: 3px solid $white;
-        //     outline: 2px solid $disable;
-        // }
+        input[type="radio"]:after {
+            cursor: pointer;
+            width: 10px;
+            height: 10px;
+            border-radius: 9999px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            background-color: $disable;
+            content: "";
+            display: inline-block;
+            visibility: visible;
+            border: 3px solid $white;
+            outline: 2px solid $disable;
+        }
 
-        // input[type="radio"]:checked:after {
-        //     width: 10px;
-        //     height: 10px;
-        //     border-radius: 9999px;
-        //     top: -2px;
-        //     left: -1px;
-        //     position: relative;
-        //     background-color: $primary;
-        //     content: "";
-        //     display: inline-block;
-        //     visibility: visible;
-        //     border: 3px solid $white;
-        //     outline: 2px solid $primary;
-        // }
-        // input[type="radio"]:first-child {
-        //     padding-right: 0.5rem;
-        // }
+        input[type="radio"]:checked:after {
+            width: 10px;
+            height: 10px;
+            border-radius: 9999px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            background-color: $primary;
+            content: "";
+            display: inline-block;
+            visibility: visible;
+            border: 3px solid $white;
+            outline: 2px solid $primary;
+        }
+        input[type="radio"]:first-child {
+            padding-right: 0.5rem;
+        }
         input[type="radio"] ~ label {
             padding-left: 0.5rem;
         }

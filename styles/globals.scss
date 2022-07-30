@@ -62,6 +62,22 @@ td {
   color: $black;
 }
 
+input[type="text"],
+input[type="date"],
+input[type="number"] {
+  background-color: $white;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: $radius;
+  border: 1.5px solid rgba($color: $primary, $alpha: 0.5);
+  box-shadow: $shadow;
+  color: $black;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
 label {
   font-size: 1rem;
 }
